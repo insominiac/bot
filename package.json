@@ -1,5 +1,5 @@
 {
-    "name": "bot",
+    "name": "vite-starter",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -9,8 +9,7 @@
       "preview": "vite preview"
     },
     "devDependencies": {
-      "vite": "^4.0.0"
-    },
-    "dependencies": {
+      "vite": "^4.0.4"
     }
   }
+  
