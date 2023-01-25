@@ -21,9 +21,9 @@ var messagesRef = firebase.database()
      snapshot.forEach(function(data) {
        var val = data.val();
         console.log(val.name)
-       content += `<div class="col"><a href=${val.name.toLowerCase()}.html><div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-1.jpg');">
-       <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-       <h3 class="pt-5 mt-5 mb-4 display-10 lh-1 fw-light">${val.name}</h3></div></div></a></div>`
+       content += `<div class="col"><a href=${val.name.toLowerCase()}.html style="color:transparent"><div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url(${val.imageurl});">
+       <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1" style="background:#000;opacity:0.5">
+       <h3 class="pt-5 mt-5 mb-4 display-10 lh-1 fw-light">${val.name}</h3><p>${val.description}</p></div></div></a></div>`
      });
      $('#bots').append(content);
    }
