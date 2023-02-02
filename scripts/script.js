@@ -85,7 +85,7 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://my-codexweb-service.onrender.com', {
+    const response = await fetch('https://chat-servernode.onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
