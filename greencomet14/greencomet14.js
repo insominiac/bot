@@ -38,7 +38,7 @@ function loader(element) {
  console.log(`${timestamp}-${hexadecimalString}`)
  console.log("result:",result)
  return  result;}
- function chatStripe(isAi, value, uniqueId) {return (`<div class="wrapper ${isAi && "ai"}"><div class="chat"> <div class="profile"><img src=${isAi ? bot : user} alt="${isAi ? "bot" : "user"}" /></diiv><div class="message" id=${uniqueId}>${value}</div> </div> </div>`)}
+ function chatStripe(isAi, value, uniqueId) {return (`<div class="wrapper ${isAi && "ai"}"><div class="chat"> <div class="profile"><img src=${isAi ? bot : user} alt="${isAi ? "bot" : "user"}" /></div><div class="message" id=${uniqueId}>${value}</div> </div> </div>`)}
  function getInputVal(id) {return document.getElementById(id).value;}
  const handleSubmit = async (e) => {var message = getInputVal("promptmsgs");
  console.log(message)
