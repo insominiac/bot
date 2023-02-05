@@ -14,10 +14,19 @@ var firebaseConfig = {apiKey: "AIzaSyArIyFKvHKgy5ZJWFeuDJyLpqd1GApsrrY",authDoma
  {if (snapshot.exists()) {snapshot.forEach(function(data) {var val = data.val();
  prompt_val = val.prompt});}});
  let loadInterval
- function loader(element) {
- element.textContent = ""
- loadInterval = setInterval(() => {textContent += "."
- if (element.textContent === "....") {element.textContent = " ";}}, 300);}
+function loader(element) {
+    element.textContent = ''
+
+    loadInterval = setInterval(() => {
+        // Update the text content of the loading indicator
+        element.textContent += '.';
+
+        // If the loading indicator has reached three dots, reset it
+        if (element.textContent === '....') {
+            element.textContent = '';
+        }
+    }, 300);
+}
  function typeText(element, text) {let index = 0 
  let interval = setInterval(() => {if (index < text.length) {element.innerHTML += text.charAt(index)
  index++ } else { clearInterval(interval) }}, 20)}
