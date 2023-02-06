@@ -2,6 +2,30 @@ const bot = '../assets/bot.svg'
 const user = '../assets/user.svg'
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
+var firebaseConfig = {
+ apiKey: "AIzaSyArIyFKvHKgy5ZJWFeuDJyLpqd1GApsrrY",
+ authDomain: "chatbot-ca9b4.firebaseapp.com",
+ databaseURL: "https://chatbot-ca9b4-default-rtdb.firebaseio.com",
+ projectId: "chatbot-ca9b4",
+ storageBucket: "chatbot-ca9b4.appspot.com",
+ messagingSenderId: "329318236351",
+ appId: "1:329318236351:web:4ab6ab3ce70a6899f8860a"
+};
+firebase.initializeApp(firebaseConfig);
+
+ var database = firebase.database();
+ var prompt_val = '';
+ var ikey='';
+ database.ref().child('botform').on('value', function(snapshot) {
+     if (snapshot.exists()) {
+       snapshot.forEach(function(data) {
+         var val = data.val();
+         prompt_val = val.prompt 
+         ikey = data.key
+       });
+       
+     }
+   });
 
 let loadInterval
 
@@ -39,8 +63,10 @@ function generateUniqueId() {
     const timestamp = Date.now();
     const randomNumber = Math.random();
     const hexadecimalString = randomNumber.toString(16);
-
-    return `id-${timestamp}-${hexadecimalString}`;
+    var result = `id-${timestamp}-${hexadecimalString}`
+   // console.log(timestamp)
+    //console.log("resulttimestamp)
+    return  result;
 }
 
 function chatStripe(isAi, value, uniqueId) {
@@ -60,14 +86,30 @@ function chatStripe(isAi, value, uniqueId) {
     `
     )
 }
+function getInputVal(id) {
+    return document.getElementById(id).value;
+}
+
+    
 
 const handleSubmit = async (e) => {
+    var messagesRef = firebase.database()
+   .ref().child('/botform/' + ikey);
+
+   var message = getInputVal('promptmsgs');
+   console.log(message)
+   console.log(ikey)
+
+
+   messagesRef.update({prompt:message});
+  
+   
     e.preventDefault()
 
     const data = new FormData(form)
 
     // user's chatstripe
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+    chatContainer.innerHTML += chatStripe(false,data.get('prompt'))
 
     // to clear the textarea input 
     form.reset()
@@ -85,16 +127,16 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://my-codexweb-service.onrender.com', {
+    const response = await fetch('https://chat-server-o6nz.onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            prompt: data.get('prompt')
+            prompt:data.get('prompt')
         })
     })
-
+    console.log(prompt_val)
     clearInterval(loadInterval)
     messageDiv.innerHTML = " "
 
