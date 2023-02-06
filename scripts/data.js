@@ -15,7 +15,7 @@ var messagesRef = firebase.database()
 
  var database = firebase.database();
 
- database.ref('botform').on('value', function(snapshot) {
+ database.ref('botform').once('value', function(snapshot) {
    if (snapshot.exists()) {
      var content = '';
      snapshot.forEach(function(data) {
