@@ -1,7 +1,8 @@
-const bot = '../assets/bot.svg'
+`const bot = '../assets/bot.svg'
 const user = '../assets/user.svg'
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
+const msgs =[]
 var firebaseConfig = {
  apiKey: "AIzaSyArIyFKvHKgy5ZJWFeuDJyLpqd1GApsrrY",
  authDomain: "chatbot-ca9b4.firebaseapp.com",
@@ -15,17 +16,15 @@ firebase.initializeApp(firebaseConfig);
 
  var database = firebase.database();
  var prompt_val = '';
- var ikey='';
- database.ref().child('botform').on('value', function(snapshot) {
-     if (snapshot.exists()) {
-       snapshot.forEach(function(data) {
-         var val = data.val();
+ var ikey='-NNslc0QdjjEYGQlGaAG';
+ console.log(ikey)
+ database.ref().child(\`/botform/\${ikey}/\`).once('value', function(snapshot) {
+     
+         var val = snapshot.val();
          prompt_val = val.prompt 
-         ikey = data.key
-       });
-       
-     }
-   });
+        //ikey = data.key
+      
+ });
 
 let loadInterval
 
@@ -45,7 +44,6 @@ function loader(element) {
 
 function typeText(element, text) {
     let index = 0
-
     let interval = setInterval(() => {
         if (index < text.length) {
             element.innerHTML += text.charAt(index)
@@ -63,27 +61,29 @@ function generateUniqueId() {
     const timestamp = Date.now();
     const randomNumber = Math.random();
     const hexadecimalString = randomNumber.toString(16);
-    var result = `id-${timestamp}-${hexadecimalString}`
+    var result = \`id-\${timestamp}-\${hexadecimalString}\`;
+    return  result;
+
+
    // console.log(timestamp)
     //console.log("resulttimestamp)
-    return  result;
 }
 
 function chatStripe(isAi, value, uniqueId) {
     return (
-        `
-        <div class="wrapper ${isAi && 'ai'}">
+       \`
+        <div class="wrapper \${isAi && 'ai'}">
             <div class="chat">
                 <div class="profile">
                     <img 
-                      src=${isAi ? bot : user} 
-                      alt="${isAi ? 'bot' : 'user'}" 
+                      src=\${isAi ? bot : user} 
+                      alt="\${isAi ? 'bot' : 'user'}" 
                     />
                 </div>
-                <div class="message" id=${uniqueId}>${value}</div>
+                <div class="message" id=\${uniqueId}>\${value}</div>
             </div>
         </div>
-    `
+    \`
     )
 }
 function getInputVal(id) {
@@ -93,23 +93,28 @@ function getInputVal(id) {
     
 
 const handleSubmit = async (e) => {
-    var messagesRef = firebase.database()
-   .ref().child('/botform/' + ikey);
+    console.log(prompt_val)
 
+   // const finalkey = ikey
+
+   // var messagesRef = firebase.database()
+  // .ref().child('/botform/' + finalkey);
+   
    var message = getInputVal('promptmsgs');
-   console.log(message)
-   console.log(ikey)
+  
 
 
-   messagesRef.update({prompt:message});
+  // messagesRef.update({prompt:message});
   
    
     e.preventDefault()
 
     const data = new FormData(form)
+    msgs.push(prompt_val + getInputVal('promptmsgs'))
 
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false,data.get('prompt'))
+
 
     // to clear the textarea input 
     form.reset()
@@ -124,16 +129,17 @@ const handleSubmit = async (e) => {
     // specific message div 
     const messageDiv = document.getElementById(uniqueId)
 
+
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://chat-server-o6nz.onrender.com', {
+    const response = await fetch('http://localhost:3000/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            prompt:data.get('prompt')
+            prompt:\`\${msgs}\`
         })
     })
     console.log(prompt_val)
@@ -142,9 +148,11 @@ const handleSubmit = async (e) => {
 
     if (response.ok) {
         const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
-
+        const parsedData = data.bot.trim()
         typeText(messageDiv, parsedData)
+       // confirm
+
+        console.log(msgs)
     } else {
         const err = await response.text()
 
@@ -158,4 +166,4 @@ form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
         handleSubmit(e)
     }
-})
+})`
