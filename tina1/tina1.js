@@ -17,7 +17,7 @@ const bot = '../assets/bot.svg'
        var database = firebase.database();
        var prompt_val = '';
        var ikey='-NNslc0QdjjEYGQlGaAG';
-       console.log(`-NO5hsgQD0xi8ZDbsM9H`};
+      // console.log(`-NO5hsgQD0xi8ZDbsM9H`};
        database.ref().child(`/botform/`-NO5hsgQD0xi8ZDbsM9H/`).once('value', function(snapshot) {
 
                var val = snapshot.val();
