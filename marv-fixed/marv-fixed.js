@@ -132,7 +132,7 @@ const bot = '../assets/bot.svg'
           // messageDiv.innerHTML = "..."
           loader(messageDiv)
       
-          const response = await fetch('http://localhost:8000/', {
+          const response = await fetch('https://chat-server-o6nz.onrender.com', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
