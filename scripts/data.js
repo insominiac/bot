@@ -1,11 +1,11 @@
-var firebaseConfig = {
-    apiKey: "AIzaSyArIyFKvHKgy5ZJWFeuDJyLpqd1GApsrrY",
- authDomain: "chatbot-ca9b4.firebaseapp.com",
- databaseURL: "https://chatbot-ca9b4-default-rtdb.firebaseio.com",
- projectId: "chatbot-ca9b4",
- storageBucket: "chatbot-ca9b4.appspot.com",
- messagingSenderId: "329318236351",
- appId: "1:329318236351:web:4ab6ab3ce70a6899f8860a"
+const firebaseConfig = {
+  apiKey: "AIzaSyCAzupEfPnjlZa8k4p9lXMqNhFwe_JSc3Y",
+  authDomain: "openai-41fb8.firebaseapp.com",
+  databaseURL: "https://openai-41fb8-default-rtdb.firebaseio.com",
+  projectId: "openai-41fb8",
+  storageBucket: "openai-41fb8.appspot.com",
+  messagingSenderId: "807371754493",
+  appId: "1:807371754493:web:99e627918257a663026794"
 };
 
 firebase.initializeApp(firebaseConfig);
